@@ -449,7 +449,7 @@ int main(){
     return 0;
 }*/
 
-#include<iostream>
+/*#include<iostream>
 using namespace std;
 
 void TOH(int n,int a,int b,int c){
@@ -461,6 +461,110 @@ TOH(n-1,b,a,c);
 }
 int main(){
     TOH(3,1,2,3);
+
+    return 0;
+}
+*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){ 
+  vector<int> v={0,1,2,3,4};
+  auto left=v.begin();
+  auto right=v.end()-1;
+  int temp;
+  while(left!=right){
+    temp=*(left);
+    *(left)=*(right);
+    *(right)=temp;
+    left=left+1;
+    right=right-1;
+  }
+  for(vector<int>::iterator it=v.begin();it!=v.end();it++){
+    cout<<*(it);
+  }
+
+
+    return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+void fun(int l,int r,int a[]){
+    if(l>=r)
+    return;
+    swap(a[l],a[r]);
+    fun(l+1,r-1,a);
+}
+
+
+int main(){
+
+    int a[]={0,1,2,3};
+    fun(0,3,a);
+
+    for(auto i:a)
+    cout<<i<<" ";
+
+    return 0;
+
+}*/
+
+//reversing an array using one pointer
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+void fun(int i,int n,int a[]){
+    if(i>=n/2) return;
+    swap(a[i],a[n-i-1]);
+    fun(i+1,n,a);
+}
+int main(){
+    int n=4;
+    int a[n]={1,2,3,4};
+    fun(0,n,a);
+
+    for(auto i:a)
+    cout<<i<<" ";
+
+    return 0;
+
+}
+*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+bool fun(int i,int n,string s){
+    if(i>=n/2) return true;
+    if(s[i]!=s[n-i-1]) return false;
+    return fun(i+1,n,s);
+}
+int main(){
+    string s="BOOK";
+    int n=s.length();
+    cout<<fun(0,n,s);
+
+    return 0;
+}*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int fib(int n){
+    if(n<=1)
+    return n;
+
+    return fib(n-1)+fib(n-2);  
+
+}
+
+int main(){
+    int n=3;
+    cout<<fib(n)<<" ";
 
     return 0;
 }
