@@ -77,7 +77,7 @@ int main(){
     
   }*/
 
-  #include<iostream>
+  /*#include<iostream>
   using namespace std;
 
   void display(int a[],int length){
@@ -116,8 +116,719 @@ int main(){
       }
       return 0;
   }
+*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  
+  int arr[9]={0,1,2,3,3,4,4,5,5};
+  int largest=arr[0]; 
+  int slargest=-1;                         // IF THE AARAY CONTAIN NEGATIVE NUMBER THAN DECLARE THIS AS slargest=INT_MIN
+
+  for(int i=0;i<9;i++){
+    if(arr[i]>largest) largest=arr[i];                         // we can also find the largest element and second largest element by using sorting in which the last element from sorted array will return  
+  }                                                    
+  for(int i=0;i<9;i++){
+    if(arr[i]>slargest && arr[i]!=largest) slargest=arr[i];
+  }
+  cout<<slargest;
+
+  return 0;  
+}*/
+
+//ANOTHER OPTIMAL APPROACH 
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+void finds(int arr[],int smallest,int ssmallest){
+  for(int i=0;i<9;i++){
+    if(arr[i]<smallest){
+      ssmallest=smallest;
+      smallest=arr[i];
+    }
+    else if(arr[i]>smallest && arr[i]<ssmallest) ssmallest=arr[i];
+  }
+  cout<<smallest<<" "<<ssmallest;
+}
+
+void findl(int arr[],int largest,int slargest){
+   for(int i=0;i<9;i++){
+    if(arr[i]>largest){
+      slargest=largest;
+      largest=arr[i];
+    }
+  }
+  cout<<largest<<" "<<slargest;
+}
+int main(){
+  int arr[9]={1,2,3,3,4,4,5,5,6};
+
+  int largest=arr[0];
+  int slargest=-1,ssmallest=INT_MAX;
+
+  //findl(arr,largest,slargest);
+  finds(arr,largest,ssmallest);
+  
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[6]={0,1,2,4,3,3};           // array is sorted or not
+
+  int count=0;
+  for(int i=0;i<n-1;i++){
+    if(arr[i]<=arr[i+1]) count++;
+    else break;
+  }
+  if(count==n-1) cout<<"sorted";
+  else cout<<"not sorted";
+
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=7;
+  int arr[n]={1,1,2,2,3,3,4};
+  int index=0;
 
 
+  set<int> st;
+  for(int i=0;i<n;i++) st.insert(arr[i]);           // remove duplicates from sorted array TC-> N + NlogN
+
+  for(auto it: st){
+    arr[index]=it;
+    index++;
+  }
+cout<<index;
+  return 0;
+}
+*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=7;
+  int arr[n]={1,1,2,2,3,3,4};
+  int i=0;
+  for(int j=1;j<n;j++){
+    if(arr[j]!=arr[i]){
+     arr[i+1]=arr[j];
+     i++;
+    }
+  }
+  cout<<i+1;   // size of array after removal of duplicate elements  TC-> O(n) SC->O(1)
+
+  return 0;
+}
+*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+   int n=7;
+  int arr[n]={1,1,2,2,3,3,4};
+  int val=3;
+  int i=0;
+  for(int j=0;j<n;j++){
+    if(arr[j]!=val){
+      arr[i]=arr[j];               //remove element 
+      i++;
+    }
+  }
+  cout<<i;
+  return 0;
+}
+*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=7;
+  int arr[n]={1,1,2,2,3,3,4};
+
+  int temp=arr[0];
+
+  for(int i=1;i<=n;i++){
+    if(i<n) arr[i-1]=arr[i];
+    else arr[i-1]=temp;                              // left rotation
+  }
+  for(int i=0;i<n;i++) cout<<arr[i]<<" ";
+
+  return 0;
+}*/
+
+// BRUTE FORCE TO left rotate array by d places
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=7;
+  int arr[n]={1,1,2,2,3,3,4};
+  int d=11;
+  vector<int> temp;
+  if(d>n) d=d%n;
+
+  for(int i=0;i<d;i++) temp.push_back(arr[i]);          // it will store the elements in temp array 
+  for(int i=d;i<n;i++) arr[i-d]=arr[i];
+  for(int i=n-d;i<n;i++) arr[i]=temp[i-(n-d)];
+  for(int i=0;i<n;i++) cout<<arr[i]<<" ";
+
+  return 0;
+
+}*/
 
 
+/*#include<bits/stdc++.h>                   // right rotate array by k places
+using namespace std;
 
+int main(){
+  int n=7;
+  int arr[n]={1,1,2,2,3,3,4};
+  int k=3;
+  if(k>n) k=k%n;
+  vector<int> temp;
+
+       for(int i=n-k;i<n;i++) temp.push_back(arr[i]);
+       for(int i=n-1;i>=k;i--) arr[i]=arr[i-k];
+       for(int i=0;i<k;i++) arr[i]=temp[i];
+
+       for(int i=0;i<n;i++) cout<<arr[i]<<" ";
+
+  return 0;
+
+} */
+
+// optimal solution for rotation which take O(1) space complexity 
+
+/*#include<bits/stdc++.h>                   // right rotate array by k places
+using namespace std;
+
+int main(){
+  int n=7;
+  int arr[n]={1,1,2,2,3,3,4};
+  int k=3;
+  if(k>n) k=k%n;
+
+  reverse(arr,arr+k);
+  reverse(arr+k,arr+n);    // left rotation
+  reverse(arr,arr+n);
+
+  reverse(arr,arr+(n-k));
+  reverse(arr+(n-k),arr+n);  // right rotation
+  reverse(arr,arr+n); 
+
+
+  for(int i=0;i<n;i++) cout<<arr[i]<<" ";
+  return 0;
+}*/
+
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=8;
+  int arr[n]={1,0,2,0,0,5,4,6};            // moving zero to end
+  vector<int> temp;
+
+  for(int i=0;i<n;i++){
+    if(arr[i]!=0) temp.push_back(arr[i]);
+    }
+    for(int i=0;i<n;i++) arr[i]=0;
+   for(int i=0;i<temp.size();i++) arr[i]=temp[i];
+
+   for(int i=0;i<n;i++) cout<<arr[i]<<" ";
+
+   return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=8;
+  int arr[n]={1,0,2,0,0,5,4,6};               // optimal soln of mobing zero
+
+  int j=-1;
+  for(int i=0;i<n;i++){
+    if(arr[i]==0){ 
+      j=i;
+      break;
+    }
+  }
+  for(int i=j+1;i<n;i++){
+    if(arr[i]!=0){
+      swap(arr[j],arr[i]);
+      j++;
+    }
+  }
+  for(int i=0;i<n;i++) cout<<arr[i]<<" ";
+   return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n1=5;
+  int n2=8;
+
+  int arr1[n1]={0,1,2,3,4};
+  int arr2[n2]={5,1,0,3,4,3,5,2};
+
+  set<int> st;                       //we use set to find the union of two array in sorted order
+  vector<int> uni;
+
+  for(int i=0;i<n1;i++) st.insert(arr1[i]);
+  for(int i=0;i<n2;i++) st.insert(arr2[i]);
+  for(auto it:st) uni.push_back(it);
+  for(int i=0;i<uni.size();i++) cout<<uni[i]<<" ";
+  
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n1=5;
+  int n2=8;
+
+  int arr1[n1]={0,1,2,3,4};
+  int arr2[n2]={1,2,3,4,5,6,7,8};              // optimal approach for union
+  int i=0,j=0;
+
+  vector<int> uni;
+
+  while(i<n1 && j<n2){
+    if(arr1[i]<=arr2[j]){
+      if(uni.size()==0 || uni.back()!=arr1[i]) {
+        uni.push_back(arr1[i]);
+      }
+      i++;
+    }
+    else{
+      if(uni.size()==0 || uni.back()!=arr2[j]){
+         uni.push_back(arr2[j]);
+      }
+      j++;
+    }
+  }
+  while(i<n1){
+    if(uni.size()==0 || uni.back()!=arr1[i]) {
+        uni.push_back(arr1[i]);
+      }
+      i++;
+  }
+  while(j<n2){
+    if(uni.size()==0 || uni.back()!=arr2[j]){
+         uni.push_back(arr2[j]);
+      }
+      j++; 
+  }
+
+  for(int i=0;i<uni.size();i++) cout<<uni[i]<<" ";
+
+  
+  return 0;
+}*/
+
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n1=7;                        // finding intersection of two sorted array 
+  int n2=7;
+
+  int arr1[n1]={0,1,2,2,3,4,5};
+  int arr2[n2]={0,1,2,3,4,5,6};
+  int vis[n2]={0};
+  vector<int> uni;
+
+  for(int i=0;i<n1;i++){
+    for(int j=0;j<n2;j++){
+      if(arr2[j]==arr1[i] && vis[j]==0){
+        uni.push_back(arr1[i]);
+        vis[j]=1;
+        break;
+      }
+      if(arr2[j]>arr1[i]) break;
+    }
+  }
+  for(int i=0;i<uni.size();i++) cout<<uni[i]<<" ";
+
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n1=8;                        //  optimal solutipn finding intersection of two sorted array 
+  int n2=7;
+
+  int arr1[n1]={1,2,2,3,3,4,5,6};
+  int arr2[n2]={2,3,3,5,6,6,7};
+  vector<int> uni;
+  int i=0,j=0; 
+
+  while(i<n1){
+    if(arr1[i]==arr2[j]){
+    uni.push_back(arr1[i]);
+    i++;
+    j++;
+    }
+    else if(arr1[i]<arr2[j]){
+    i++;
+    }
+  }
+
+  for(int i=0;i<uni.size();i++) cout<<uni[i]<<" ";
+
+  return 0; 
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=5;
+  int N=6;   // hence the given number is +1 then the size of array in missing number question
+
+  int arr[n]={1,2,3,4,6};
+  for(int i=1;i<=N;i++){
+    bool flag=0;
+    for(int j=0;j<n;j++){
+      if(arr[j]==i){
+        flag=1;
+        break;
+      }
+    }
+    if(flag==0) cout<<i;
+  }
+  
+
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=5;
+  int N=6;   // hence the given number is +1 then the size of array in missing number question
+
+  int arr[n]={1,2,3,4,6};
+  int hash[N]={0};
+  for(int i=0;i<n;i++){
+    hash[arr[i]]=1;
+  }
+  for(int i=1;i<N;i++){                    //better approach of finding missing number
+    if(hash[i]==0)
+    cout<<i;
+  }
+
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=5;
+  int N=6;   // hence the given number is +1 then the size of array in missing number question                //optimal approach of finding missing number (sum)
+
+  int arr[n]={1,2,3,4,6};
+  
+  int sum=(N*(N+1))/2;
+  int s=0;
+
+  for(int i=0;i<n;i++) s+=arr[i];
+
+  cout<<sum-s;
+
+
+  return 0;
+} */
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=5;
+  int N=6;   // hence the given number is +1 then the size of array in missing number question                //optimal approach of finding missing number (XOR)   
+
+  int arr[n]={1,2,3,4,6};
+  int xor1=0,xor2=0;
+  for(int i=0;i<n;i++) {
+    xor2=xor2^arr[i];  
+    xor1=xor1^(i+1);           // we can also use one loop here
+    xor1=xor1^N;                                                                
+  }
+  cout<<(xor1^xor2);  // here bracket is imp
+ 
+
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=11;
+  int arr[n]={1,0,1,1,1,0,1,1,0,1,1};
+  int maxn=0;
+  int count=0;
+  for(int i=0;i<n;i++){
+    if(arr[i]==1) count++;
+    else{
+      if(maxn<count) maxn=count;  
+      count=0;
+    }
+  }
+
+  for(int i=0;i<n;i++){
+    if(arr[i]==1){
+       count++;
+       maxn=max(count,maxn);
+    }
+    else count=0;
+  }
+
+  cout<<maxn;
+
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  string s1="abcd",s2="abcde";
+  int xor1=0,xor2=0;
+  for(int i=0;i<s1.length();i++){
+     xor1=xor1^s1[i];
+     xor2=xor2^s2[i];
+  }
+   xor2=xor2^s2[s2.length()-1];
+  //for(int i=0;i<s2.length();i++) xor2=xor2^s2[i];
+
+  cout<<char(xor1^xor2);
+
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=10;
+  int arr[n]={1,1,2,3,4,5,6,1,2,3};
+  int sum=0,ks=12,len=0;
+
+  for(int i=0;i<n;i++){                          // brute fo solution for longest subarray with sum k
+    for(int j=i;j<n;j++){
+      sum+=arr[j];
+      if(sum==ks) len=max(len,j-i+1);
+    }
+  }
+  cout<<len;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=10;
+  int arr[n]={1,2,3,1,1,1,1,4,2,3};
+  int k=3,maxlen=0;
+
+  map<long long,int> mp;
+  long long sum=0;
+
+  for(int i=0;i<n;i++){
+    sum+=arr[i];                            // better solution for longest subarray with sum k works for all cases +,-,0
+    if(sum==k){
+    maxlen=max(maxlen,i+1);
+    }
+  long long rem=sum-k;
+  if(mp.find(rem)!=mp.end()){
+    int len=i-mp[rem];
+    maxlen=max(len,maxlen);
+  }
+  if(mp.find(sum)==mp.end()){               // here we can go through all the element till start
+  mp[sum]=i;
+  }
+  }
+  cout<<maxlen;
+
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=9;
+  int arr[n]={1,2,3,1,1,1,1,3,3};
+  int i=0,j=0,sum=0,len=0,k=6;
+
+  while(i<n){
+    sum+=arr[i];
+
+    while(sum>k){
+      sum-=arr[j];                   // optimal case for finding longest subarray with sum k only for positive and zeroes
+      j++;
+    }
+    if(sum==k){
+      len=max(len,i-j+1);
+    }
+    i++;
+  }
+  cout<<len;
+
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=5;
+  int arr[n]={2,5,6,8,11};
+  int sum=0,rem=0,target=15;
+  bool flag=0;
+  map<int ,int> mp;
+  for(int i=0;i<n;i++) mp[arr[i]]=i;                 // better soln to find 2sum 
+  for(int i=0;i<n;i++){
+    rem=target-arr[i];
+    if(mp.find(rem)!=mp.end()){
+      flag=1;
+      break;
+    }
+  }
+  if(flag==1) cout<<"yes";
+  else cout<<"no";
+  return 0;
+}*/
+
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=5;
+  int arr[n]={2,5,6,8,11},target=15;
+  map<int,int> mp;
+  bool flag=0;
+
+  for(int i=0;i<n;i++){
+    int a=arr[i];
+    int rem=target-a;
+    if(mp.find(rem)!=mp.end()){                // another better soln to find 2sum
+      flag=1;
+      break;
+    }
+    mp[arr[i]]=i;
+  }
+  if(flag==1) cout<<"yes";
+  else cout<<"no";
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=5;
+  int arr[n]={2,5,6,8,11},target=14;
+  int i=0,j=n-1;
+  sort(arr,arr+n);  // sorting is necessary  optimal 
+
+  while(i<j){
+    int sum=arr[i]+arr[j];
+    if(sum<14) i++;
+    else if(sum>14) j--;
+    else break;
+  }
+  cout<<i<<" "<<j;
+  return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+ 
+  vector<int> arr{0,1,2,0,1,2,1,2,0,0,0,1};
+  int c0=0,c1=0,c2=0;
+
+  for(int i=0;i<arr.size();i++){
+    if(arr[i]==0)c0++;
+    else if(arr[i]==1)c1++;
+    else c2++;
+  }
+  for(int i=0;i<c0;i++) arr[i]=0; 
+  for(int j=c0;j<c0+c1;j++) arr[j]=1;                             // better soln for sorting 0 , 1 , 2  for optimal visit algo.cpp
+  for(int k=c0+c1;k<arr.size();k++) arr[k]=2;
+
+  for(int i=0;i<arr.size();i++) cout<<arr[i]<<" ";
+
+  return 0;
+
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=7;
+  int arr[n]={2,2,3,3,1,2,2};
+  int count=0;
+
+  for(int i=0;i<n;i++){
+    for(int j=0;j<n;j++){
+      if(arr[i]==arr[j]) count++;                      // Brute soln for majority element O(n2)
+    }
+    if(count>n/2) break;
+    else count=0;
+  }
+  cout<<count;  
+}*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=7;
+  int arr[n]={2,2,3,3,1,2,2};
+
+  map<int,int> mp;
+  int count;
+
+  for(int i=0;i<n;i++){
+    mp[arr[i]]++;
+  }
+  for(auto it:mp){
+    if(it.second > n/2){                     // better solution majority element using hashing O(nlogn)
+      count=it.first;
+      break;
+    }
+  }
+  cout<<count;
+  return 0;
+}
