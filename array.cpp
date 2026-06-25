@@ -783,7 +783,7 @@ int main(){
     else c2++;
   }
   for(int i=0;i<c0;i++) arr[i]=0; 
-  for(int j=c0;j<c0+c1;j++) arr[j]=1;                             // better soln for sorting 0 , 1 , 2  for optimal visit algo.cpp
+  for(int j=c0;j<c0+c1;j++) arr[j]=1;                             // better soln for sorting 0 , 1 , 2  for optimal visit algo.cpp [2]
   for(int k=c0+c1;k<arr.size();k++) arr[k]=2;
 
   for(int i=0;i<arr.size();i++) cout<<arr[i]<<" ";
@@ -810,7 +810,7 @@ int main(){
   cout<<count;  
 }*/
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
@@ -824,11 +824,170 @@ int main(){
     mp[arr[i]]++;
   }
   for(auto it:mp){
-    if(it.second > n/2){                     // better solution majority element using hashing O(nlogn)
+    if(it.second > n/2){                     // better solution majority element using hashing O(nlogn) for optimal visit algo.cpp[3]
       count=it.first;
       break;
     }
   }
   cout<<count;
   return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=8;
+  int arr[n]={-2,-3,4,-1,-2,1,5,-3};
+  int maxi=INT_MIN;
+
+  for(int i=0;i<n;i++){
+    for(int j=i;j<n;j++){
+      int sum=0;
+      for(int k=i;k<=j;k++){                       // brute soln for maximum subarray sum  O(n3)
+        sum+=arr[k];
+        maxi=max(sum,maxi);
+      }
+    }
+  }
+  cout<<maxi;
+
+  return 0; 
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=8;
+  int arr[n]={-2,-3,4,-1,-2,1,5,-3};
+  int maxi=INT_MIN;
+
+  for(int i=0;i<n;i++){
+    int sum=0;
+    for(int j=i;j<n;j++){                               // better soln for maximum subarray sum  O(n2)  for optimal visit algo.cpp[4]
+        sum+=arr[j];
+        maxi=max(sum,maxi);
+    }
+  }
+  cout<<maxi;
+
+  return 0; 
+}*/
+
+// buy and sell stock 
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={7,1,5,3,6,4};
+
+  int profit=0;
+  int mini=arr[0];
+
+  for(int i=1;i<n;i++){
+    int cost=arr[i]-mini;
+    profit=max(cost,profit);
+    mini=min(mini,arr[i]);
+  }
+  cout<<profit;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={3,1,-2,-5,2,-4};
+
+  vector<int> po,ne;
+
+  for(int i=0;i<n;i++){
+    if(arr[i]>0) po.push_back(arr[i]);               //brute soln to rearrange array with alternate 
+    else ne.push_back(arr[i]);
+  }
+  /*int j=0,k=0;
+  for(int i=0;i<n;i++){
+    if(i%2==0){
+      arr[i]=po[j];
+      j++;
+    }
+    else {
+      arr[i]=ne[k];
+      k++;
+    }
+  }
+
+  for(int i=0;i<n/2;i++){
+    arr[i*2]=po[i];
+    arr[i*2+1]=ne[i];
+  }
+  for(int i=0;i<n;i++) cout<<arr[i]<<" ";
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={3,1,-2,-5,2,-4};
+  int pos=0,neg=1;                                               // optimal soln for rearrange the elements
+  int v[n]={};           
+
+  for(int i=0;i<n;i++){
+    if(arr[i]>0){
+      v[pos]=arr[i];
+      pos+=2;
+    }
+    else{
+      v[neg]=arr[i];
+      neg+=2;
+    }
+  }
+  for(int i=0;i<n;i++) cout<<v[i]<<" ";
+}*/
+
+// follow up question 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={3,1,-2,5,2,-4};
+
+  vector<int> po,ne;
+
+  for(int i=0;i<n;i++){
+    if(arr[i]>0) po.push_back(arr[i]);               
+    else ne.push_back(arr[i]);
+  }
+
+  if(po.size()>ne.size()){
+    for(int i=0;i<ne.size();i++){
+      arr[i*2]=po[i];
+      arr[i*2+1]=ne[i];
+    }
+    int index1=ne.size()*2;
+    for(int i=ne.size();i<po.size();i++){
+      arr[index1]=po[i];
+      index1++;
+    }
+  }
+  else{
+     for(int i=0;i<po.size();i++){
+      arr[i*2]=po[i];
+      arr[i*2+1]=ne[i];
+    }
+    int index2=po.size()*2;
+    for(int i=po.size();i<ne.size();i++){
+      arr[index2]=ne[i];
+      index2++;
+    }
+  }
+
+  for(int i=0;i<n;i++) cout<<arr[i]<<" ";
+
 }

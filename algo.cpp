@@ -42,7 +42,7 @@ int main(){
 
 // MOORE'S VOTING ALGORITHM (optimal soln to find majority element )  [3]
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
@@ -67,5 +67,58 @@ int main(){
   else cout<<"-1";
 
   return 0;
-}
+}*/
+
+// KADANE'S ALGORITHM (optimal soln to find maximum subarray sum )[4]
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=8;
+  int arr[n]={-2,-3,4,-1,-2,1,5,-3};
+  int maxi=INT_MIN;
+  int sum=0;
+
+  for(int i=0;i<n;i++){
+    sum+=arr[i];
+    maxi=max(sum,maxi);                                 // if in any possibility that no subarray returning positive sum then the maxi will be 0
+
+    if(sum<0) sum=0;
+  }
+  if(maxi<0) maxi=0;
+
+  cout<<maxi;
+
+  return 0; 
+}*/
+
+// follow up question ( print subarray with largest subarray sum)
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=8;
+  int arr[n]={-2,-3,4,-1,-2,1,5,-3};
+  int maxi=INT_MIN;
+  int sum=0,start,anstart,ansend;
+
+  for(int i=0;i<n;i++){
+    sum+=arr[i];
+
+    if(sum>maxi){
+        maxi=sum;
+        anstart=start;
+        ansend=i;
+    }
+    if(sum<0){ 
+        sum=0;
+        start=i+1;
+    }
+  }
+  for(int i=anstart;i<=ansend;i++) cout<<arr[i]<<" ";
+
+  return 0; 
+}*/
 
