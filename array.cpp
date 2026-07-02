@@ -951,7 +951,7 @@ int main(){
 
 // follow up question 
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
@@ -990,4 +990,414 @@ int main(){
 
   for(int i=0;i<n;i++) cout<<arr[i]<<" ";
 
+}*/
+
+/*#include<bits/stdc++.h>                // next permutation
+using namespace std;
+
+int main(){
+  int n=3;
+  int arr[n]={3,2,1};
+
+  int ind=-1;
+
+  for(int i=n-2;i>=0;i--){
+    if(arr[i]<arr[i+1]){
+      ind=i;
+      break;
+    }
+  }
+  if(ind==-1) reverse(arr, arr+n);
+
+  else{
+  for(int i=n-1;i>=ind;i--){
+    if(arr[i]>arr[ind]){
+      swap(arr[i],arr[ind]);
+      break;
+    }
+  }
+  reverse(arr+ind+1,arr+n);
+  }                                                   // assume that arr=0 and then starting from ind+1 to n
+
+  for(int i=0;i<n;i++) cout<<arr[i]<<" ";
+
+  return 0;
+}*/
+
+// Printing all the possible permutation
+
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+void permut(int arr[], vector<vector<int>> &ans, vector<int> &ds, int freq[], int n){
+  if(ds.size()==n){
+    ans.push_back(ds);
+    return;
+  }
+  for(int i=0;i<n;i++){
+    if(!freq[i]){
+      ds.push_back(arr[i]);
+      freq[i]=1;
+      permut(arr,ans,ds,freq,n);                     // brute force code to print all permutatiion [a]
+      freq[i]=0;
+      ds.pop_back();
+    }
+  }
 }
+
+int main(){
+  int n=3;
+  int arr[n]={1,2,3};
+  vector<vector<int>> ans;
+  vector<int> ds;
+  int freq[n]={0};
+
+  permut(arr,ans,ds,freq,n);
+
+  for(int i=0;i<ans.size();i++){
+    for(int j=0;j<ans[i].size();j++){
+      cout<<ans[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+}*/
+
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    
+    vector<int> arr={1,2,3};
+    vector<vector<int>> v;
+    
+
+    sort(arr.begin(),arr.end());
+    v.push_back(arr);     
+    while(next_permutation(arr.begin(),arr.end())){
+       v.push_back(arr);                                             // optimise code to print permutation using stl
+    }
+    for(int i=0;i<v.size();i++){
+        for(int j=0;j<v[i].size();j++){
+            cout<<v[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    return 0;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={10,22,12,3,0,6};
+  vector<int> v;
+  bool flag=0;
+
+  for(int i=0;i<n;i++){
+    flag=0;
+  for(int j=i;j<n;j++){
+    if(arr[i]<arr[j]){
+      flag=1;
+      break;
+    }
+  }
+  if(flag==0) v.push_back(arr[i]);      // brute force soln to collect all the leaders (leaders means having all the smaller element after the leader element )
+  }
+  
+
+  for(int i=0;i<v.size();i++) cout<<v[i]<<" ";
+}*/
+
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={10,22,12,3,0,6};
+  vector<int> v;
+  
+  int maxi=INT_MIN;
+
+  for(int i=n-1;i>=0;i--){
+    if(arr[i]>maxi){
+      maxi=arr[i];
+      v.push_back(arr[i]);                         // optimal soln to collect all the leaders 
+    }
+  }
+  for(int i=0;i<v.size();i++) cout<<v[i]<<" "; 
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+bool ls(int arr[],int num,int n){
+  for(int i=0;i<n;i++){
+    if(arr[i]==num) return true;
+  }
+  return false;
+}
+
+int main(){
+  int n=9;
+  int arr[n]={102,4,100,1,101,3,2,1,1};                 // brute force soln to find longest consective length
+  int count,longest=1,x;
+
+  for(int i=0;i<n;i++){
+    count=1;
+    x=arr[i];
+    while(ls(arr,x+1,n)==true){
+      count++;
+      x++;
+    }
+    longest=max(count,longest);
+  }
+
+  cout<<longest;
+  
+}*/
+
+//better soln to find longest consecutive length
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=14;
+  int arr[n]={100,102,100,101,101,4,3,2,3,2,1,1,1,2};
+  int cnt=0,longest=1,lastsmall=INT_MIN;
+
+  sort(arr,arr+n);
+
+  for(int i=0;i<n;i++){
+   if(arr[i]-1==lastsmall){
+    cnt++;
+    lastsmall=arr[i];
+   }
+   else if(arr[i]!=lastsmall){
+    cnt=1;
+    lastsmall=arr[i];
+   }
+   longest=max(longest,cnt);
+  }
+  cout<<longest;
+}*/
+
+/*#include<bits/stdc++.h>           // optimal soln to find longest consecutive length
+using namespace std;
+
+int main(){
+  int n=14;
+  int arr[n]={100,102,100,101,101,4,3,2,3,2,1,1,1,2};
+
+  int cnt=1;
+  int longest=0;
+
+  unordered_set<int> st;               // unordered set takes O(1) in average and best case
+  for(int i=0;i<n;i++){
+    st.insert(arr[i]);
+  }
+  for(auto it:st){
+    if(st.find(it-1)==st.end()){
+      cnt=1;
+      int x=it;
+      while(st.find(x+1)!=st.end()){
+        x++;
+        cnt++;
+      }
+      longest=max(longest,cnt);
+    }
+  }
+   cout<<longest;                    // this takes TC O(3N) and SC O(N)
+}*/
+
+// set metrix zeroes  brute force soln
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+void rowzero(int arr[][4],int i,int m){
+for(int j=0;j<m;j++){
+  if(arr[i][j]==1) arr[i][j]=-1;
+}
+}
+void colzero(int arr[][4],int j,int n){
+  for(int i=0;i<n;i++){
+    if(arr[i][j]==1) arr[i][j]=-1;
+  }
+}
+
+int main(){
+ const int n=4,m=4;
+ int arr[n][m]={
+    {1,1,1,1},
+    {1,0,0,1},
+    {1,1,0,1},
+    {1,1,1,1}
+};
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      if(arr[i][j]==0){
+        rowzero(arr,i,m);
+        colzero(arr,j,n);
+      }
+    }
+  }
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      if(arr[i][j]==-1) arr[i][j]=0;
+    }
+  }
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      cout<<arr[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+
+  
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+ const int n=4,m=4;
+ int arr[n][m]={
+    {1,1,1,1},                                   // better soln to set metrix zero
+    {1,0,1,1},
+    {1,1,0,1},
+    {1,1,0,1} };
+
+  int row[n]={0};
+  int col[m]={0};
+
+for(int i=0;i<n;i++){
+  for(int j=0;j<m;j++){
+    if(arr[i][j]==0){
+      row[i]=1;
+      col[j]=1;
+    }
+  }
+}
+for(int i=0;i<n;i++){
+  for(int j=0;j<m;j++){
+    if(row[i]==1 || col[j]==1) arr[i][j]=0;
+  }
+}
+for(int i=0;i<n;i++){
+  for(int j=0;j<m;j++){
+    cout<<arr[i][j]<<" ";
+  }
+  cout<<endl;
+}
+
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+ const int n=4,m=4;
+ int arr[n][m]={
+    {1,1,1,1},                                   // optimal soln to set metrix zero [b]
+    {1,0,1,1},
+    {1,1,0,1},
+    {0,1,1,1} };
+    int col0=1;
+
+  //int row[n]={0}; row = arr[..][0]
+  //int col[m]={0}; column = arr[0][..]
+
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      if(arr[i][j]==0){
+        arr[i][0]=0;
+        if(j!=0) arr[0][j]=0;
+        else col0=0;
+      }
+    }
+  }
+  for(int i=1;i<n;i++){
+    for(int j=1;j<m;j++){
+      if(arr[i][j]!=0){
+        if(arr[i][0]==0 || arr[0][j]==0) arr[i][j]=0;
+      }
+    }
+  }
+  if(arr[0][0]==0){
+    for(int j=0;j<m;j++) arr[0][j]=0;
+  }
+  if(col0==0){
+    for(int i=0;i<n;i++) arr[i][0]=0;
+  }
+
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      cout<<arr[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+
+
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=4,m=4;
+  int arr[n][m]={
+    {1,2,3,4},                                   //brute force soln to rotate matrix by 90
+    {5,6,7,8},
+    {9,10,11,12},
+    {13,14,15,16} };
+  int ans[n][m];
+
+    for(int i=0;i<n;i++){
+      for(int j=0;j<m;j++){
+        ans[j][(n-1)-i]=arr[i][j];
+      }
+    }
+    for(int i=0;i<n;i++){
+      for(int j=0;j<m;j++){
+        cout<<ans[i][j]<<" ";
+      }
+      cout<<endl;
+    }
+}*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=4,m=4;
+  int arr[n][m]={
+    {1,2,3,4},                                   //optimal soln to rotate matrix by 90
+    {5,6,7,8},
+    {9,10,11,12},
+    {13,14,15,16} };
+
+    for(int i=0;i<n-1;i++){
+      for(int j=i+1;j<m;j++){
+         swap(arr[i][j],arr[j][i]);        // first we do transpose by changing element expect at the same i and j which is diagonal    
+      }
+    }
+    for(int i=0;i<n;i++){
+      reverse(arr[i],arr[i]+n);
+    }
+
+
+
+    for(int i=0;i<n;i++){
+      for(int j=0;j<m;j++){
+        cout<<arr[i][j]<<" ";
+      }
+      cout<<endl;
+    }
+
+
+  }

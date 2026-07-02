@@ -160,12 +160,21 @@ cout<<s<<" ";                                   // it will print all the possibl
 using namespace std;
 
 int main(){
+    
+    vector<int> arr={1,2,3};
+    vector<vector<int>> v;
+    
 
-    string s="354";    // to have all the combo of given string always start with sorted string 
-    sort(s.begin(),s.end());
-
-    while(next_permutation(s.begin(),s.end())){
-        cout<<s<<" ";                                  
+    sort(arr.begin(),arr.end());
+    v.push_back(arr);
+    while(next_permutation(arr.begin(),arr.end())){
+       v.push_back(arr);
+    }
+    for(int i=0;i<v.size();i++){
+        for(int j=0;j<v[i].size();j++){
+            cout<<v[i][j]<<" ";
+        }
+        cout<<endl;
     }
     return 0;
 }
