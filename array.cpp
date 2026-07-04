@@ -1370,7 +1370,7 @@ int main(){
     }
 }*/
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
@@ -1400,4 +1400,141 @@ int main(){
     }
 
 
+  }*/
+
+  /*#include<bits/stdc++.h>
+  using namespace std;
+
+  int main(){
+    int n=4,m=2;
+    int arr[n][m]={
+      {1,2},
+      {3,4},
+      {5,6},
+      {7,8}
+    };
+    vector<int> ans;
+
+    int top=0,bottom=n-1,left=0,right=m-1;
+
+    while(top<=bottom && left<=right){
+    // right
+
+    for(int i=left;i<=right;i++){
+      ans.push_back(arr[top][i]);                          // direction of spiral matrix will be right->bottom->left->top [c]
+    }
+    top++;
+
+    // bottom
+
+    for(int i=top;i<=bottom;i++){
+      ans.push_back(arr[i][right]);
+    }
+    right--;
+
+    // left
+    if(top<=bottom){
+    for(int i=right;i>=left;i--){
+      ans.push_back(arr[bottom][i]);
+    }
+    bottom--;
   }
+
+    // top
+    if(left<=right){
+    for(int i=bottom;i>=top;i--){
+      ans.push_back(arr[i][left]);
+    }
+    left++;
+  }
+  }
+
+  for(int i=0;i<ans.size();i++) cout<<ans[i]<<" ";
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=10;
+  int arr[n]={1,2,3,-3,1,1,1,4,2,-3};              // better soln to find no. of subarray having sum k
+  int k=3;
+
+  int cnt=0;
+
+  for(int i=0;i<n;i++){
+    int sum=0;
+    for(int j=i;j<n;j++){
+      sum+=arr[j];
+    }
+    if(sum==k) cnt++;
+  }
+  cout<<cnt;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=10;
+  int arr[n]={1,2,3,-3,1,1,1,4,2,-3};
+  int k=3;
+  map<int,int> mp;                //map of <sum,appearance(app)>      optimal soln for finding no. of subarray with sum k
+  int sum=0;
+  int cnt=0;
+  mp[0]=1;
+
+  for(int i=0;i<n;i++){
+    sum+=arr[i];
+    int rem=sum-k;
+    if(mp.find(rem)!=mp.end()){
+       cnt=cnt+mp[rem];
+    }
+    mp[sum]++;
+  }
+  cout<<cnt;
+  
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={4,5,0,-2,-3,1};       
+  int k=5;                     // follow up question brute divisible by k subarray 
+  int cnt=0;
+
+  for(int i=0;i<n;i++){
+    int sum=0;
+    for(int j=i;j<n;j++){
+      sum+=arr[j];
+      if(sum%k==0) cnt++;
+    }
+  }
+  cout<<cnt; 
+  
+ 
+}
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={4,5,0,-2,-3,1};       
+  int k=5;
+  map<int,int> mp;  
+  mp[0]=1;
+  int sum=0;
+int cnt=0;                                      // optimal divisible by k
+  for(int i=0;i<n;i++){
+    sum+=arr[i];
+    int rem=sum%k;
+    if(rem<0) rem=rem+k;
+    cnt+=mp[rem];
+    mp[rem]++;
+  }
+cout<<cnt;
+}
