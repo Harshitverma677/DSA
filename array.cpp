@@ -1518,7 +1518,7 @@ int main(){
 }
 */
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
@@ -1537,4 +1537,212 @@ int cnt=0;                                      // optimal divisible by k
     mp[rem]++;
   }
 cout<<cnt;
+}*/
+
+// pascal's triangle type 1 for brute we need to first generate the pascals trianglr and then got the element at that place 
+// for better solution there is a formula (r-1)C(c-1) COMBINATION here r=row and c=column
+
+
+/*
+             1
+           1   1                 pascal's triangle
+         1   2   1
+       1   3   3   1
+     1   4   6   4   1
+*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int ncr(int r,int c){
+int res=1;
+for(int i=0;i<c;i++){
+  res=res*(r-i);
+  res=res/(i+1);
+}
+return res;
+}
+
+int main(){
+  int r=5,c=3;
+  cout<<ncr(r-1,c-1);
+}
+*/
+
+/*#include<bits/stdc++.h>           // in type 2 we are given a row at which we have toprint all the element in the array and we konw that the no of row is equal to the number of element in that row
+using namespace std;
+
+int ncr(int r,int c){
+  int res=1;
+  for(int i=0;i<c;i++){
+    res=res*(r-i);
+    res=res/(i+1);
+  }
+  return res;
+}
+int main(){
+  int r=6;
+  for(int c=1;c<=r;c++){
+    cout<<ncr(r-1,c-1)<<" ";           // TC(O(n x r)) which is brute
+  }
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int r=6;  // r is the row we have to print
+  int n=r-1;
+  int res=1;
+  cout<<res<<" "; 
+  for(int i=1;i<n;i++){
+    res=res*(n-i);
+    res=res/i;
+    cout<<res<<" ";
+  }
+}*/
+
+// type 3 to print the pattern of pascal's triangle
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int ncr(int row,int col){
+  int res=1;
+  for(int i=0;i<col;i++){
+    res=res*(row-i);
+    res=res/(i+1);
+  }
+  return res;
+}
+                                        // here we use two list to print the pascal's triangle pattern
+int main(){
+  int r; // rows
+  cout<<"enter rows: ";
+  cin>>r;
+  vector<vector<int>> ans;
+  vector<int> temp;
+
+  for(int row=1;row<r;row++){
+    temp.clear();
+    for(int col=1;col<row;col++){
+      temp.push_back(ncr(row-1,col-1));
+    }
+    ans.push_back(temp);
+  }
+}
+*/
+
+// another better case
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> genrow(int row){
+  long long ans=1;
+  vector<int> ansRow;
+  ansRow.push_back(1);
+  for(int col=1;col<row;col++){
+    ans=ans*(row-col);
+    ans=ans/col;
+    ansRow.push_back(ans);
+  }
+  return ansRow;
+}
+int main(){
+  int r=5;
+  vector<vector<int>> ans;
+  for(int i=1;i<=r;i++){
+    ans.push_back(genrow(i));
+  }
+  for(int row=0;row<=r;row++){
+    for(int col=0;col<=row;col++){
+      cout<<ans[row][col]<<" ";
+    }
+    cout<<endl;
+  }
+
+}*/
+
+// majority element n/3  // brute soln
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=8;
+  int arr[n]={1,1,1,2,2,3,3,3};
+  vector<int> ans;
+
+  for(int i=0;i<n;i++){
+    if(ans.size()==0 || find(ans.begin(),ans.end(),arr[i])==ans.end()){
+      int count=0;
+      for(int j=0;j<n;j++){
+        if(arr[j]==arr[i]) count++;
+      }
+      if(count>n/3) ans.push_back(arr[i]);
+    }
+    if(ans.size()==n/3) break;
+  }
+  for(int i=0;i<ans.size();i++) cout<<ans[i]<<" ";
+}*/
+
+// better soln for majority element n/3 
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=8;
+  int arr[n]={1,1,1,1,2,3,3,3};
+  vector<int> ans;
+  unordered_map<int,int> mp;
+  for(int i=0;i<n;i++){
+    mp[arr[i]]++;
+  }
+  for(auto it:mp){
+    if(ans.size()<=n/3){
+      if(it.second>n/3) ans.push_back(it.first);
+    }
+    }
+
+    for(int i=0;i<ans.size();i++) cout<<ans[i]<<" ";
+}*/
+
+//optimal soln for majority element n/3;
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=8;
+  int arr[n]={1,1,1,2,2,3,3,3};
+  int cnt1=0,cnt2=0;
+  int ele1=INT_MIN,ele2=INT_MIN;
+
+  for(int i=0;i<n;i++){
+    if(cnt1==0 && ele2!=arr[i]){
+      cnt1=1;
+      ele1=arr[i];
+    }
+    else if(cnt2==0 && ele1!=arr[i]){
+      cnt2=1;
+      ele2=arr[i];
+    }
+    else if(arr[i]==ele1) cnt1++;
+    else if(arr[i]==ele2) cnt2++;
+    else cnt1--,cnt2--;
+  }
+  vector<int> ls;
+  cnt1=0,cnt2=0;
+  for(int i=0;i<n;i++){
+    if(ele1==arr[i]) cnt1++;
+    if(ele2==arr[i]) cnt2++;
+  }
+  int mini=(int)(n/3)+1;
+  if(cnt1>=mini) ls.push_back(ele1);
+  if(cnt2>=mini) ls.push_back(ele2);
+  sort(ls.begin(),ls.end());
+
+  for(int i=0;i<ls.size();i++) cout<<ls[i]<<" ";
 }
