@@ -1711,7 +1711,7 @@ int main(){
 
 //optimal soln for majority element n/3;
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
@@ -1745,4 +1745,313 @@ int main(){
   sort(ls.begin(),ls.end());
 
   for(int i=0;i<ls.size();i++) cout<<ls[i]<<" ";
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+                                                // brute force soln to find 3 sum
+int main(){
+  int n=6;
+  int arr[n]={-1,0,1,2,-1,-4};
+  set<vector<int>> st;
+  for(int i=0;i<n;i++){
+    for(int j=i+1;j<n;j++){
+      for(int k=j+1;k<n;k++){
+        if(arr[i]+arr[j]+arr[k]==0){
+          vector<int> temp={arr[i],arr[j],arr[k]};
+          sort(temp.begin(),temp.end());
+          st.insert(temp);
+        }
+      }
+    }
+  }
+  vector<vector<int>> ans(st.begin(),st.end());
+
+  for(int i=0;i<ans.size();i++){
+    for(int j=0;j<ans[0].size();j++){
+      cout<<ans[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+                                        // better soln to find 3 sum
+int main(){
+  int n=6;
+  int arr[n]={-1,0,1,2,-1,-4};
+
+  set<vector<int>> st;
+  for(int i=0;i<n;i++){
+    set<int> hashset;
+    for(int j=i+1;j<n;j++){
+      int third=-(arr[i]+arr[j]);
+      if(hashset.find(third)!=hashset.end()){
+        vector<int> temp={arr[i],arr[j],third};
+        sort(temp.begin(),temp.end());
+        st.insert(temp);
+      }
+      hashset.insert(arr[j]);
+    }
+  }
+  vector<vector<int>> ans(st.begin(),st.end());
+
+    for(int i=0;i<ans.size();i++){
+    for(int j=0;j<ans[0].size();j++){
+      cout<<ans[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+  
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={-1,0,1,2,-1,-4};                 // optimal soln for 3sum
+
+  sort(arr,arr+n);
+  vector<vector<int>> ans;
+  for(int i=0;i<n;i++){
+    if(i>0 && arr[i]==arr[i-1]) continue;
+    int j=i+1;
+    int k=n-1;
+    while(j<k){
+      int sum=arr[i]+arr[j]+arr[k];
+      if(sum>0) k--;
+      else if(sum<0) j++;
+      else{
+        vector<int> temp={arr[i],arr[j],arr[k]};
+        ans.push_back(temp);
+        j++;
+        k--;
+        while(j<k && arr[j]==arr[j-1]) j++;
+        while(j<k && arr[k]==arr[k+1]) k--;
+      }
+    }
+  }
+  for(int i=0;i<ans.size();i++){
+    for(int j=0;j<ans[0].size();j++){
+      cout<<ans[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+}*/
+
+// 4 sum brute force soln
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={1,0,-1,0,2,-2};
+
+  int target=0;
+
+  set<vector<int>> st;
+  for(int i=0;i<n;i++){
+    for(int j=i+1;j<n;j++){
+      for(int k=j+1;k<n;k++){
+        for(int l=k+1;l<n;l++){
+          if(arr[i]+arr[j]+arr[k]+arr[l]==target){
+            vector<int> temp={arr[i],arr[j],arr[k],arr[l]};
+            sort(temp.begin(),temp.end());
+            st.insert(temp);
+          }
+        }
+      }
+    }
+  }
+  vector<vector<int>> ans(st.begin(),st.end());
+
+    for(int i=0;i<ans.size();i++){
+    for(int j=0;j<ans[0].size();j++){
+      cout<<ans[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+}*/
+
+// better soln to find 4 sum
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={1,0,-1,0,2,-2};
+
+  int target=0;
+
+  set<vector<int>> st;
+  for(int i=0;i<n;i++){
+    for(int j=i+1;j<n;j++){
+       set<int> hashset;
+      for(int k=j+1;k<n;k++){ 
+        int sum=arr[i]+arr[j]+arr[k];
+        int rem=target-sum;
+        if(hashset.find(rem)!=hashset.end()){
+          vector<int> temp={arr[i],arr[j],arr[k],rem};
+          sort(temp.begin(),temp.end());
+          st.insert(temp);
+        }
+        hashset.insert(arr[k]);
+      }
+    }
+  }
+  vector<vector<int>> ans(st.begin(),st.end());
+
+    for(int i=0;i<ans.size();i++){
+    for(int j=0;j<ans[0].size();j++){
+      cout<<ans[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+}*/
+
+// optimal soln for 4 sum
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={1,0,-1,0,2,-2};
+
+  int target=0;
+  sort(arr,arr+n);
+  vector<vector<int>> ans;
+  for(int i=0;i<n;i++){
+    if(i>0 && arr[i]==arr[i-1]) continue;
+    for(int j=i+1;j<n;j++){
+      if(j!=i+1 && arr[j]==arr[j-1]) continue;
+      int k=j+1;
+      int l=n-1;
+      while(k<l){
+        int sum=arr[i]+arr[j]+arr[k]+arr[l];
+        if(sum<0) k++;
+        else if(sum>0) l--;
+        else{
+          vector<int> temp={arr[i],arr[j],arr[k],arr[l]};
+          ans.push_back(temp);
+          k++;
+          l--;
+          while(k<l && arr[k]==arr[k-1]) k++;
+          while(k<l && arr[l]==arr[l+1]) l--;
+        }
+      }
+    }
+  }
+    for(int i=0;i<ans.size();i++){
+    for(int j=0;j<ans[0].size();j++){
+      cout<<ans[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+}*/
+
+// brute/better force soln to count sbarray whose xor equals to k
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=5;
+  int arr[n]={4,2,2,6,4};
+  int k=6;
+
+  int cnt=0;
+
+  for(int i=0;i<n;i++){
+    int xoro=0;
+    for(int j=i;j<n;j++){
+      xoro=xoro^arr[j];
+      if(xoro==k) cnt++;
+    }
+  }
+  cout<<cnt;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=5;
+  int arr[n]={4,2,2,6,4};
+  int k=6;
+
+  int cnt=0;
+  unordered_map<int,int> mp;
+  mp[0]=1;
+  int xoro=0;
+  for(int i=0;i<n;i++){
+    xoro=xoro^arr[i];
+    int x=xoro^k;
+    if(mp.find(x)!=mp.end()){
+      cnt+=mp[x];
+    }
+    mp[xoro]++;
+  }
+  cout<<cnt;
+}
+*/
+
+// brute soln to merge sorted intervals
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=8,m=2;
+  vector<vector<int>> arr={{1,3},{2,6},{8,9},{9,11},{8,10},{2,4},{15,18},{16,17}};
+  sort(arr.begin(),arr.end());
+  vector<vector<int>> ans;
+
+  for(int i=0;i<n;i++){
+    int start=arr[i][0];
+    int end=arr[i][1];
+    if(!ans.empty() && end<=ans.back()[1]) continue;
+    for(int j=i+1;j<n;j++){
+      if(arr[j][0]<=end){
+        end=max(end,arr[j][1]);
+      }
+      else break;
+    }
+    ans.push_back({start,end});
+  }
+  for(int i=0;i<ans.size();i++){
+    for(int j=0;j<ans[0].size();j++){
+      cout<<ans[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+}
+*/
+
+// optimal soln to merge sorted intervals
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=8,m=2;
+  vector<vector<int>> arr={{1,3},{2,6},{8,9},{9,11},{8,10},{2,4},{15,18},{16,17}};
+  sort(arr.begin(),arr.end());
+  vector<vector<int>> ans;
+
+  for(int i=0;i<n;i++){
+    if(ans.empty()||ans.back()[1]<arr[i][0]) ans.push_back(arr[i]);
+    else{
+      ans.back()[1]=max(ans.back()[1],arr[i][1]);
+    }
+  }
+  for(int i=0;i<ans.size();i++){
+    for(int j=0;j<ans[0].size();j++){
+      cout<<ans[i][j]<<" ";
+    }
+    cout<<endl;
+  }
 }
