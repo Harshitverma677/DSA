@@ -2033,7 +2033,7 @@ int main(){
 */
 
 // optimal soln to merge sorted intervals
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
@@ -2054,4 +2054,151 @@ int main(){
     }
     cout<<endl;
   }
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=4,m=6;
+  int arr1[n]={1,3,5,7};
+  int arr2[m]={0,2,4,6,8,9};                  // brute force soln to merge two sorted array
+
+  vector<int> arr3(n+m);
+  int left=0;
+  int right=0;
+  int index=0;
+
+  while(left<n && right<m){
+    if(arr1[left]<=arr2[right]){
+      arr3[index]=arr1[left];
+      index++;
+      left++;
+    }
+    else if(arr1[left]>=arr2[right]){
+      arr3[index]=arr2[right];
+      index++;
+      right++;
+    }
+  }
+  while(left<n) {
+    arr3[index]=arr1[left];
+    index++;
+    left++;
+  }
+  while(right<m) {
+    arr3[index]=arr2[right];
+    index++;
+    right++;
+  }
+
+  for(int i=0;i<arr3.size();i++){
+    if(i<n) arr1[i]=arr3[i];
+    else arr2[i-n]=arr3[i];
+  }
+  
+  for(int i=0;i<n;i++) cout<<arr1[i]<<" ";
+  cout<<endl;
+  for(int i=0;i<m;i++) cout<<arr2[i]<<" ";
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=4,m=6;
+  int arr1[n]={1,3,5,7};
+  int arr2[m]={0,2,4,6,8,9};                  // optimal soln to merge two sorted array
+
+
+  int left=n-1;  //largest element in 1st array 
+  int right=0;   // smallest element in 2nd array
+
+  while(left>=0 && right<m){
+    if(arr1[left]>=arr2[right]){
+      swap(arr1[left],arr2[right]);
+      left--;
+      right++;
+    }
+    else break;
+  }
+  sort(arr1,arr1+n);
+  sort(arr2,arr2+m);
+
+  for(int i=0;i<n;i++) cout<<arr1[i]<<" ";
+  cout<<endl;
+  for(int i=0;i<m;i++) cout<<arr2[i]<<" ";
+  
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;                                // brute force soln to find missing and repeating number
+  int arr[n]={2,3,4,6,1,1};
+  int repeating=-1,missing=-1;
+
+  for(int i=1;i<=n;i++){
+    int count=0;
+    for(int j=0;j<n;j++){
+      if(i==arr[j]) count++;
+    }
+    if(count==0) missing=i;
+    else if(count==2) repeating=i;
+  }
+
+  cout<<missing<<" "<<repeating;
+}
+*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;                                
+  int arr[n]={2,3,4,6,1,1};
+  int repeating=-1,missing=-1;
+  vector<int> hasharray(n+1,0);          // better soln
+
+  for(int i=0;i<n;i++){
+    hasharray[arr[i]]++;
+  }
+  for(int i=1;i<=n;i++){
+    if(hasharray[i]==0) missing=i;
+    else if(hasharray[i]==2) repeating=i;
+  }
+  cout<<missing<<" "<<repeating;
+  
+}*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=6;
+  int arr[n]={2,3,4,6,1,1};
+  int repeating=-1,missing=-1;
+
+  int xr=0;
+  for(int i=0;i<n;i++){
+    xr=xr^arr[i];                 // most optimal soln using xor otherwise it can be solve maths or by adding and subtraction
+    xr=xr^(i+1);
+  }
+  int bitno=0;
+
+  while(1){
+    if((xr&(1<<bitno))!=0) break;   // here we use left shift in this we left shift the 1 to & with xr one by one here we use this to find the place where bit are different
+    bitno++;
+  }
+  int one=0,zero=0;
+  for(int i=0;i<n;i++){
+    if((arr[i]&(1<<bitno))!=0) one=one^arr[i];
+    else zero=zero^arr[i];
+  }
+  for(int i=1;i<=n;i++){
+    if((i&(1<<bitno))!=0) one=one^i;
+    else zero=zero^i;
+  }
+  cout<<zero<<" "<<one;
 }
