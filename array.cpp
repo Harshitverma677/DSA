@@ -2172,7 +2172,7 @@ int main(){
   
 }*/
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
@@ -2201,4 +2201,58 @@ int main(){
     else zero=zero^i;
   }
   cout<<zero<<" "<<one;
+}*/
+
+// brute force soln to count inversions
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=5;
+  int arr[n]={5,3,2,4,1};
+  int count=0;
+
+  for(int i=0;i<n;i++){
+    for(int j=i+1;j<n;j++){
+      if(arr[i]>arr[j]) count++;
+    }
+  }
+  cout<<count;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=4;
+  int arr[n]={2,3,-2,4};
+  int maxpro=INT_MIN;           // brute and better soln to find max product of subarray
+  for(int i=0;i<n;i++){
+    int mul=1;
+    for(int j=i;j<n;j++){
+      mul*=arr[j];
+      maxpro=max(maxpro,mul);
+    }
+  }
+  cout<<maxpro;
+}*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n=4;
+  int arr[n]={2,3,-2,4};
+  int prefix=1,suffix=1;
+  int maxi=INT_MIN;
+                                    // optimal soln to find max product subarray
+  for(int i=0;i<n;i++){
+    if(prefix==0) prefix=1;
+    if(suffix==0) suffix=1;
+    prefix*=arr[i];
+    suffix*=arr[n-i-1];
+    maxi=max(maxi,max(prefix,suffix));
+    }
+    cout<<maxi;
 }
