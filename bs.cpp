@@ -345,24 +345,50 @@ int main(){
 }
 */
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
     int n=7;
     int arr[n]={4,5,6,7,0,1,2};
-    int small=INT_MAX;
-    int low=0,high=n-1;
+    int small=INT_MAX,index=-1;
+    int low=0,high=n-1;                       // finding minimum in rotated sorted array and number of rotation
     while(low<=high){
         int mid=low+(high-low)/2;
         if(arr[mid]>=arr[low]){
-            small=min(small,arr[low]);
+            if(arr[low]<small){
+                small=arr[low];
+                index=low;
+            }
             low=mid+1;
         }
         else if(arr[mid]<=arr[high]){
-            small=min(small,arr[mid]);
+            if(arr[mid]<small){
+                small=arr[mid];
+                index=mid;
+            }
             high=mid-1;
         }
     }
-    cout<<small;
+    cout<<small<<" "<<index;
+}*/
+#include<bits/stdc++.h>
+using namespace std;
+int search(int arr[],int low,int high,int n){
+    if(arr[0]!=arr[1]) return arr[0];
+    if(arr[n-1]!=arr[n-2]) return arr[n-1];
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        if(arr[mid]!=arr[mid+1] && arr[mid]!=arr[mid-1]) return arr[mid];
+        if(mid%2==1 && arr[mid]==arr[mid-1] ||mid%2==0 && arr[mid]==arr[mid+1]) low=mid+1;  // we are on the left half and eliminating left half
+        else high=mid-1;  // we are on the right half and eliminating right half
+    }
+}
+int main(){
+    int n=11;
+    int arr[n]={1,1,2,2,3,3,4,5,5,6,6};
+    int low=1,high=n-2;
+
+    cout<<search(arr,low,high,n);
+    
 }
