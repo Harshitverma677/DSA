@@ -372,7 +372,9 @@ int main(){
     }
     cout<<small<<" "<<index;
 }*/
-#include<bits/stdc++.h>
+// single element in sorted array 
+
+/*#include<bits/stdc++.h>
 using namespace std;
 int search(int arr[],int low,int high,int n){
     if(arr[0]!=arr[1]) return arr[0];
@@ -381,7 +383,7 @@ int search(int arr[],int low,int high,int n){
         int mid=low+(high-low)/2;
         if(arr[mid]!=arr[mid+1] && arr[mid]!=arr[mid-1]) return arr[mid];
         if(mid%2==1 && arr[mid]==arr[mid-1] ||mid%2==0 && arr[mid]==arr[mid+1]) low=mid+1;  // we are on the left half and eliminating left half
-        else high=mid-1;  // we are on the right half and eliminating right half
+        else high=mid-1;                                                                    // we are on the right half and eliminating right half
     }
 }
 int main(){
@@ -391,4 +393,42 @@ int main(){
 
     cout<<search(arr,low,high,n);
     
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;                      // find peak element means arr[i-1]<arr[i]>arr[i+1]
+
+int main(){
+    int n=6;
+    int arr[n]={1,2,3,4,5,3};
+    int index=-1;
+
+    for(int i=0;i<n;i++){
+        if((i==0 || arr[i+1]<arr[i]) && (i==n-1 || arr[i-1]<arr[i])) index=i;
+    }
+    cout<<index;
+}*/
+
+// optimal soln
+#include<bits/stdc++.h>
+using namespace std;                      // find peak element
+
+int peak(int arr[],int n){
+    if(n==1) return 0;
+    if(arr[0]>arr[1]) return 0;
+    if(arr[n-1]>arr[n-2]) return n-1;
+    int low=1,high=n-2;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        if(arr[mid-1]<arr[mid] && arr[mid]>arr[mid+1]) return mid;
+        if(arr[mid-1]<arr[mid] && arr[mid]<arr[mid+1]) low=mid+1;
+        else high=mid-1;   // works for other cases and also works when there is multiple peaks
+    }
+    return -1;
+}
+int main(){
+    int n=5;
+    int arr[n]={1,5,1,2,1};
+
+    cout<<peak(arr,n);
 }

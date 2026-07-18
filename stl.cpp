@@ -156,25 +156,3 @@ cout<<s<<" ";                                   // it will print all the possibl
 }
 */
 
-#include<bits/stdc++.h>
-using namespace std;
-
-int main(){
-    
-    vector<int> arr={1,2,3};
-    vector<vector<int>> v;
-    
-
-    sort(arr.begin(),arr.end());
-    v.push_back(arr);
-    while(next_permutation(arr.begin(),arr.end())){
-       v.push_back(arr);
-    }
-    for(int i=0;i<v.size();i++){
-        for(int j=0;j<v[i].size();j++){
-            cout<<v[i][j]<<" ";
-        }
-        cout<<endl;
-    }
-    return 0;
-}
