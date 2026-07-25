@@ -42,7 +42,7 @@ int main(){
     cout<<t;
 }*/
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
@@ -82,4 +82,35 @@ int main(){
        else i++,j++;
     }
     cout<<cnt;
-}
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n=6;
+    int arr[n]={100,4,200,1,3,2};
+    int start=1,length=0;
+
+    unordered_set<int,int> st(arr,arr+n);
+
+    int i=0;
+    
+    while(i<n){
+        int cnt=arr[i];
+        start=1;
+        if(st.find(cnt-1)!=st.end()){
+           i++;
+            continue;
+        }
+        while(st.find(cnt+1)!=st.end()){
+            cnt++;
+            start++;
+        }
+        length = max(length, start);
+        i++;
+    }
+    cout<<length;
+    
+}*/
+

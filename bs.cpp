@@ -410,7 +410,7 @@ int main(){
 }*/
 
 // optimal soln
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;                      // find peak element
 
 int peak(int arr[],int n){
@@ -432,3 +432,189 @@ int main(){
 
     cout<<peak(arr,n);
 }
+*/
+
+// finding sqrt by binary search
+
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int search(int target){
+    int low=1,high=target,ans;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        long long pro=mid*mid;
+        if(pro==target) return mid;
+        else if(pro<=target){
+            low=mid+1;
+            ans=mid;
+        }
+        else high=mid-1;
+    }
+    return ans;
+}
+
+int main(){
+    int target=28;
+   cout<<search(target);
+}*/
+
+// nth root of a number
+
+/*#include<bits/stdc++.h>
+using namespace std;
+int func(int mid,int n){
+long long ans=1;
+while(n>0){
+    if(n%2==1){
+        ans=ans*mid;
+        n--;
+    }
+    else{
+        mid=mid*mid;
+        n=n/2;
+    }
+}
+return ans;
+}
+
+int search(int n,int m){
+    int low=1,high=m;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        int midn=func(mid,n);
+        if(midn==m) return mid;
+        else if(midn<m) low=mid+1;
+        else high=mid-1;
+    }
+    return -1;
+}
+
+int main(){
+    int n=3,m=64;
+   cout<<search(n,m);
+}
+*/
+
+// minimum number of days required to form bouqets;
+
+/*#include<bits/stdc++.h>
+using namespace std;                                  // brute force soln 
+
+bool poss(int arr[],int day,int m,int k,int n){
+    int cnt=0,bouque=0;
+    for(int i=0;i<n;i++){
+        if(arr[i]<=day)cnt++;
+        else{
+            bouque+=(cnt/k);
+            cnt=0;
+        }
+    }
+    bouque+=(cnt/k);
+    if(bouque>=m) return true;
+    return false;
+}
+
+int main(){
+    int n=8;
+    int arr[n]={7,7,7,7,13,11,12,7};
+    int m=2,k=3;
+    int maxi=INT_MIN,mini=INT_MAX;
+
+    if(n<m*k) return -1;
+
+    for(int i=0;i<n;i++){
+        maxi=max(maxi,arr[i]);
+        mini=min(mini,arr[i]);
+    }
+    int ans;
+    for(int i=mini;i<=maxi;i++){
+        if(poss(arr,i,m,k,n)==true){
+             ans=i;
+             break;
+        }
+    }
+    cout<<ans;
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;                                  // optimal soln using binary search 
+
+bool poss(int arr[],int day,int m,int k,int n){
+    int cnt=0,bouque=0;
+    for(int i=0;i<n;i++){
+        if(arr[i]<=day)cnt++;
+        else{
+            bouque+=(cnt/k);
+            cnt=0;
+        }
+    }
+    bouque+=(cnt/k);
+    if(bouque>=m) return true;
+    return false;
+}
+
+int main(){
+    int n=8;
+    int arr[n]={7,7,7,7,13,11,12,7};
+    int m=2,k=3;
+    int maxi=INT_MIN,mini=INT_MAX;
+
+    if(n<m*k) return -1;
+
+    for(int i=0;i<n;i++){
+        maxi=max(maxi,arr[i]);
+        mini=min(mini,arr[i]);
+    }
+    int ans;
+    int low=mini,high=maxi;
+
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        if(poss(arr,mid,m,k,n)==true){
+            ans=mid;
+            high=mid-1;
+        }
+        else low=mid+1;
+    }
+    cout<<ans;
+}
+*/
+
+// find smallest divisor that gives threshold
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool find(int arr[],int val,int thresh,int n){
+    int sum=0;
+    for(int i=0;i<n;i++){
+        sum+=(arr[i]+val-1)/val;
+    }
+    if(sum<=thresh) return true;
+    return false;
+}
+
+int main(){
+    int n=5;
+    int arr[n]={44,22,33,11,1};
+    int thresh=5;
+    int maxi=INT_MIN;
+    for(int i=0;i<n;i++){
+        maxi=max(maxi,arr[i]);
+    }
+    int low=1,high=maxi;
+    int ans=-1;
+
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        if(find(arr,mid,thresh,n)==true){
+            ans=mid;
+            high=mid-1;
+        } 
+        else low=mid+1;
+    }
+    cout<<ans;
+}
+

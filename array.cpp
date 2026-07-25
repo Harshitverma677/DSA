@@ -475,7 +475,7 @@ int main(){
   return 0;
 }*/
 
-/*#include<bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
@@ -487,21 +487,21 @@ int main(){
   vector<int> uni;
   int i=0,j=0; 
 
-  while(i<n1){
-    if(arr1[i]==arr2[j]){
-    uni.push_back(arr1[i]);
-    i++;
-    j++;
+while(i<n1 && j<n2) {
+    if(arr1[i]==arr2[j]) {
+        if(uni.empty() || uni.back()!=arr1[i])
+            uni.push_back(arr1[i]);
+        i++;
+        j++;
     }
-    else if(arr1[i]<arr2[j]){
-    i++;
-    }
-  }
+    else if(arr1[i]<arr2[j]) i++;
+    else j++;
+}
 
   for(int i=0;i<uni.size();i++) cout<<uni[i]<<" ";
 
   return 0; 
-}*/
+}
 
 /*#include<bits/stdc++.h>
 using namespace std;
@@ -2238,7 +2238,7 @@ int main(){
   cout<<maxpro;
 }*/
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 int main(){
@@ -2255,4 +2255,4 @@ int main(){
     maxi=max(maxi,max(prefix,suffix));
     }
     cout<<maxi;
-}
+}*/
