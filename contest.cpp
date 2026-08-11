@@ -114,3 +114,71 @@ int main(){
     
 }*/
 
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n=3,k=2;
+    int num=n-k+1;
+    int sum=0,cnt=0;
+    long long mul=1;
+    for(int i=1;i<=num;i++){
+        for(int j=1;j<=num;j++){
+            for(int k=1;k<=num;k++){
+                sum=i+j+k;
+                mul=1LL*i*j*k;
+                if(sum==n && mul%2==0) cnt++;
+            }
+            sum=0,mul=1;
+        }
+    }
+    cout<<cnt;
+
+}*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int num(int n,int s){
+    if(s>9*n) return -1;
+    long long num=0;
+    int rem=s;
+    for(int i=0;i<n;i++){
+        int digit=min(9,rem);
+        num=num*10+rem;
+        rem-=digit;
+    }
+    return num;
+}
+
+int main(){
+    int n=2,s=9;
+
+    cout<<num(n,s);
+}*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    string s="bacdc",t="abc";
+
+    vector<int> ans;
+    int i=0,j=0;
+    int cnt=0;
+    while(j<t.length()){
+        bool flag=0;
+        while(i<=s.length()-t.length()){
+            if(s[i]==t[j]){
+                i++,j++;
+                break;
+            }
+        }
+    }
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<" ";
+    }
+}
+
+
+

@@ -584,7 +584,7 @@ int main(){
 
 // find smallest divisor that gives threshold
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 bool find(int arr[],int val,int thresh,int n){
@@ -616,5 +616,418 @@ int main(){
         else low=mid+1;
     }
     cout<<ans;
+}*/
+
+// least weight to complete package in d days
+
+/*#include<bits/stdc++.h>
+using namespace std;
+int func(int arr[],int n,int cap){
+    int days=1,load=0;
+    for(int i=0;i<n;i++){
+        if(arr[i]+load>cap){
+            days++;
+            load=arr[i];
+        }
+        else load+=arr[i];
+    }
+    return days;
 }
+
+int main(){
+    int n=10;
+    int arr[n]={1,2,3,4,5,6,7,8,9,10};
+    int day=5;
+    int maxi=INT_MIN;
+    int sum=0;
+    for(int i=0;i<n;i++){
+        maxi=max(maxi,arr[i]);
+        sum+=arr[i];
+    }
+    int low=maxi,high=sum;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        int days=func(arr,n,mid);
+        if(days<=day) high=mid-1;
+        else low=mid+1; 
+    }
+    cout<<low;
+}*/
+
+/*#include<bits/stdc++.h>                // Kth missing positive integer
+using namespace std;
+int fun(int arr[],int n,int k){
+    int low=0,high=n-1;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        int miss=arr[mid]-(mid+1);
+        if(miss<k) low=mid+1;
+        else high=mid-1;
+    }
+    return high+1+k;
+}
+
+int main(){
+    int n=5;
+    int arr[n]={2,3,4,7,11};
+    int k=5;
+    cout<<fun(arr,n,k);
+}
+*/
+
+// agressive cows (placing cows at min distance which is max) O(n^2)
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+bool canbeplaced(int arr[],int dist,int n,int cows){
+    int cowcnt=1,last=arr[0];
+    for(int i=1;i<n;i++){
+        if(arr[i]-last>=dist){
+            cowcnt++;
+            last=arr[i];
+        }
+    }
+    if(cowcnt>=cows) return true;
+    else return false;
+}
+
+int main(){
+    int n=6;
+    int arr[n]={0,3,4,7,10,9};
+    int cows=4;
+    sort(arr,arr+n);
+
+    int maxi=INT_MIN,mini=INT_MAX;
+    int ans;
+
+    for(int i=0;i<n;i++){
+        maxi=max(maxi,arr[i]);
+        mini=min(mini,arr[i]);
+    }
+    for(int i=1;i<=maxi-mini;i++){
+        if(canbeplaced(arr,i,n,cows)==true) continue;
+        else{
+            ans=i-1; 
+            break;
+        }
+    }
+    cout<<ans;
+}*/
+
+
+// agressive cows (placing cows at min distance which is max) O(n)
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+bool canbeplaced(int arr[],int dist,int n,int cows){
+    int cowcnt=1,last=arr[0];
+    for(int i=1;i<n;i++){
+        if(arr[i]-last>=dist){
+            cowcnt++;
+            last=arr[i];
+        }
+    }
+    if(cowcnt>=cows) return true;
+    else return false;
+}
+
+int main(){
+    int n=6;
+    int arr[n]={0,3,4,7,10,9};
+    int cows=4;
+    sort(arr,arr+n);
+
+    int maxi=INT_MIN,mini=INT_MAX;
+    int ans=-1;
+
+    for(int i=0;i<n;i++){
+        maxi=max(maxi,arr[i]);
+        mini=min(mini,arr[i]);
+    }
+    int low=1,high=maxi-mini;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        if(canbeplaced(arr,mid,n,cows)==true){
+            low=mid+1;
+            ans=max(ans,mid);
+        }
+        else high=mid-1;
+    }
+    cout<<ans;
+}*/
+
+// Allocate books O(n^2)
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int func(int arr[],int pages,int n){
+    int std=1,sumofp=0;
+    for(int i=0;i<n;i++){
+        if(sumofp+arr[i]<=pages) sumofp+=arr[i];
+        else{
+            sumofp=arr[i];
+            std++;
+        }
+    }
+    return std;
+}
+
+int main(){
+    int n=5;
+    int arr[n]={25,46,28,49,24};
+    int s=4;
+    int maxi=INT_MIN,sum=0;
+    int ans=-1;
+
+    for(int i=0;i<n;i++){
+        maxi=max(maxi,arr[i]);
+        sum+=arr[i];
+    }
+    for(int pages=maxi;pages<=sum;pages++){
+        int cntstd=func(arr,pages,n);
+        if(cntstd==s){
+            ans=pages;
+            break;
+        }
+    }
+    cout<<ans;
+}*/
+
+
+// Allocate books O(nlogn)
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int func(int arr[],int pages,int n){
+    int std=1,sumofp=0;
+    for(int i=0;i<n;i++){
+        if(sumofp+arr[i]<=pages) sumofp+=arr[i];
+        else{
+            sumofp=arr[i];
+            std++;
+        }
+    }
+    return std;
+}
+
+int main(){
+    int n=5;
+    int arr[n]={25,46,28,49,24};
+    int s=4;
+    int maxi=INT_MIN,sum=0;
+    int ans=-1;
+
+    for(int i=0;i<n;i++){
+        maxi=max(maxi,arr[i]);
+        sum+=arr[i];
+    }
+    int low=maxi,high=sum;
+    while(low<high){
+        int mid=low+(high-low)/2;
+        int cntstd=func(arr,mid,n);
+        if(cntstd>=s){
+            low=mid+1;
+            ans=mid;
+        }
+        else high=mid-1;
+    }
+    cout<<ans;
+}*/
+
+// painter's partition 
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int func(int arr[],int units,int n){
+    int painter=1,sumofp=0;
+    for(int i=0;i<n;i++){
+        if(sumofp+arr[i]<=units) sumofp+=arr[i];
+        else{
+            sumofp=arr[i];
+            painter++;
+        }
+    }
+    return painter;
+}
+
+int main(){
+    int n=4;
+    int arr[n]={10,20,30,40};
+    int k=2;                               // number of painters available
+    int maxi=INT_MIN,sum=0;
+
+    for(int i=0;i<n;i++){
+        maxi=max(maxi,arr[i]);
+        sum+=arr[i];
+    }
+    int low=maxi,high=sum;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        int cntpainter=func(arr,mid,n);
+        if(cntpainter>k){
+            low=mid+1;
+        }
+        else high=mid-1;
+    }
+    cout<<low;
+}*/
+
+// gas station problem in which minimisation of max space between gas station O(n^2)
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n=4;
+    int arr[n]={1,13,17,23};
+    int k=5;
+    vector<int> hash(n-1,0);
+    for(int gas=1;gas<=k;gas++){
+        long double spacelength=-1;
+        int index=-1;
+        for(int i=0;i<n-1;i++){
+            long double space=(arr[i+1]-arr[i])/(hash[i]+1);
+            if(spacelength<space){
+             spacelength=space;
+             index=i;
+            }
+        }
+        hash[index]++;
+    }
+    long double ans=-1;
+    for(int i=0;i<n-1;i++){
+        long double space=(arr[i+1]-arr[i])/(long double)(hash[i]+1);
+        ans=max(ans,space);
+    }
+    cout<<ans;
+}
+*/
+
+// gas station problem in which minimisation of max space between gas station O(nlogn)
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n=4;
+    int arr[n]={1,13,17,23};
+    int k=5;
+    vector<int> hash(n-1,0);
+    priority_queue<pair<long double,int>> pq;
+    for(int i=0;i<n-1;i++){
+        pq.push({arr[i+1]-arr[i],i});
+    }
+    for(int gas=1;gas<=k;gas++){
+       auto tp=pq.top();pq.pop();
+       int secindex=tp.second;
+       hash[secindex]++;
+       long double diff=arr[secindex+1]-arr[secindex];
+       long double space=diff/(long double)(hash[secindex]+1);
+       pq.push({space,secindex});
+    }
+    cout<<pq.top().first;
+}*/
+
+// median of two sorted arrays using space O(n1+n2)
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n1=6;
+    int n2=4;
+    int arr1[n1]={1,3,4,7,10,12};
+    int arr2[n2]={2,3,6,15};
+    vector<int> arr3;
+    vector<int> ans;
+
+    int i=0,j=0;
+    while(i<n1 && j<n2){
+        if(arr1[i]<=arr2[j]){
+            arr3.push_back(arr1[i]);
+            i++;
+        }
+        else if(arr1[i]>arr2[j]){
+            arr3.push_back(arr2[j]);
+            j++;
+        }
+    }
+    while(i<n1){
+        arr3.push_back(arr1[i]);
+        i++;
+    }
+    while(j<n2){
+        arr3.push_back(arr2[j]);
+        j++;
+    }
+
+    if(arr3.size()%2==0){
+        ans.push_back(arr3[arr3.size()/2-1]);
+        ans.push_back(arr3[arr3.size()/2]);
+    }
+    else ans.push_back(arr3[arr3.size()/2]);
+
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<" ";
+    }
+}*/
+
+// median of two sorted arrays using Time O(nlogn)
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n1=6;
+    int n2=4;
+    int arr1[n1]={1,3,4,7,10,12};
+    int arr2[n2]={2,3,6,15};
+
+    int i=0,j=0;
+    int n=n1+n2;
+    int index1=n/2-1;
+    int index2=n/2;
+    int ele1=-1,ele2=-1;
+    int cnt=0;
+
+    while(i<n1 && j<n2){
+        if(arr1[i]<arr2[j]){
+            if(cnt==index1) ele1=arr1[i];
+            if(cnt==index2) ele2=arr1[i];
+            cnt++;
+            i++;
+        }
+        else{
+            if(cnt==index1) ele1=arr2[j];
+            if(cnt==index2) ele2=arr2[j];
+            cnt++;
+            j++;
+        }
+    }
+    while(i<n1){
+         if(cnt==index1) ele1=arr1[i];
+         if(cnt==index2) ele2=arr1[i];
+            cnt++;
+            i++;
+    }
+    while(j<n2){
+        if(cnt==index1) ele1=arr2[j];
+        if(cnt==index2) ele2=arr2[j];
+            cnt++;
+            j++;
+    }
+    int ans=-1;
+    if(n%2==1) ans=ele2;
+    else ans=(double)((double)(ele1+ele2))/2.0;
+
+    cout<<ans;
+}*/
+
+
+
 
