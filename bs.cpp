@@ -1028,6 +1028,119 @@ int main(){
     cout<<ans;
 }*/
 
+//kth element of two soted array 
 
+/*#include<bits/stdc++.h>
+using namespace std;
 
+int main(){
+    int n1=5,n2=7;
+    int arr1[n1]={2,3,6,7,9};
+    int arr2[n2]={1,4,8,10,12,15,16};
+    int k=11;
+    int i=0,j=0;
+    int cnt=0;
+    vector<int> ans;
+    while(i<n1 && j<n2){
+        if(cnt==k) break;
+        if(arr1[i]<=arr2[j]){
+            ans.push_back(arr1[i]);
+            i++;
+        }
+        else if(arr1[i]>arr2[j]){
+            ans.push_back(arr2[j]);
+            j++;
+        }
+        cnt++;
+    }
+    while(i<n1){
+        if(cnt==k) break;
+        cnt++;
+        ans.push_back(arr1[i]);
+        i++;
+    }
+     while(j<n2){
+        if(cnt==k) break;
+        cnt++;
+        ans.push_back(arr2[j]);
+        j++;
+    }
+    cout<<ans[k-1];
+}*/
 
+// binary search 2D array 
+
+// maximum 1s in  row  we can also do it by finding lower bound
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int cnt1s(int arr[][5],int i,int m){
+    int low=0,high=m-1;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        if(arr[i][mid]==1 && (mid==0 || arr[i][mid-1]==0)) return m-mid;
+        if(arr[i][mid]==1) high=mid-1;
+        else low=mid+1;
+    }
+    if(high==-1) return m;
+    else if(low==m) return 0;
+}
+
+int main(){
+    int n=5,m=5;
+    int arr[5][5]={
+        {0,0,1,1,1},
+        {0,0,0,0,0},
+        {0,1,1,1,1},
+        {0,0,0,0,0},
+        {0,1,1,1,1}
+    };
+    int maxi=INT_MIN;
+    int index=-1;
+    for(int i=0;i<n;i++){
+        int cnt=cnt1s(arr,i,m);
+        if(cnt>maxi){
+            maxi=cnt;
+            index=i;
+        }
+    }
+    cout<<index;
+}*/
+
+// search in 2D array 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool bs(int arr[],int m,int target){
+    int low=0,high=m-1;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        if(arr[mid]==target) return true;
+        if(arr[mid]<target) low=mid+1;
+        else high=mid-1;
+    }
+    return false;
+}
+
+int main(){
+    int n=3,m=4;
+    int arr[3][4]={
+        {1,3,5,7},
+        {10,11,16,20},
+        {23,30,34,60},
+    };
+    int target=25;
+    bool flag=0;
+    for(int i=0;i<n;i++){
+        if(arr[i][0]<=target && arr[i][m-1]){
+            if(bs(arr[i],m,target)==true){
+                flag=1;
+                break;
+            }
+            else break;
+        }
+    }
+    cout<<flag;
+}
