@@ -1110,7 +1110,7 @@ int main(){
 
 // search in 2D array 
 
-#include<bits/stdc++.h>
+/*#include<bits/stdc++.h>
 using namespace std;
 
 bool bs(int arr[],int m,int target){
@@ -1143,4 +1143,77 @@ int main(){
         }
     }
     cout<<flag;
+}*/
+
+// search in a 2D matrix ||
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int m=5,n=5;
+    int arr[m][n]={
+    {1,4,7,11,15}
+    ,{2,5,8,12,19}
+    ,{3,6,9,16,22}
+    ,{10,13,14,17,24}
+    ,{18,21,23,26,30}};
+
+    int target=5;
+    int row=0,col=m-1;
+    bool flag=0;
+    while(row<n && col>=0){
+        if(arr[row][col]==target){
+            flag=1;
+            break;
+        }
+        if(arr[row][col]<target) row++;
+        else col--;
+    }
+    cout<<flag;
+}*/
+
+// finding peak element II
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int maxele(int arr[],int m){
+    int maxi=INT_MIN,row=-1;
+    for(int i=0;i<m;i++){
+        if(maxi<arr[i]) row=i;
+    }
+    return row;
+}
+void peak(vector<int> &ans,int arr[][3],int n,int m){
+    int low=0,high=n-1;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        int row=maxele(arr[mid],m);
+        int left=-1,right=-1;
+        if(mid-1<0) left=-1;
+        else left=arr[row][mid-1];
+        if(mid+1>=n) right=-1;
+        else right=arr[row][mid+1];
+        if(left<arr[row][mid] && right<arr[row][mid]){
+            ans.push_back(row);
+            ans.push_back(mid);
+            break;
+        }
+        else if(arr[row][mid]<left) high=mid-1;
+        else low=mid+1;
+    }
+    return;
+}
+
+int main(){
+    int m=3,n=3;
+    int arr[3 ][3]={
+        {10,20,15}
+        ,{21,30,14}
+        ,{7,16,32}
+    };
+    vector<int> ans;
+    peak(ans,arr,n,m);
+    cout<<ans[0]<<" "<<ans[1];
 }
